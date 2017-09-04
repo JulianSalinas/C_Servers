@@ -1,6 +1,8 @@
 #ifndef LIST_H
 #define LIST_H
+
 #include <stdlib.h>
+#include <stdio.h>
 #include "util.h"
 
 typedef struct List List;
@@ -11,7 +13,7 @@ typedef struct Node Node;
  */
 struct Node {
     Node * next, * prev;
-    long content;
+    void * content;
 };
 
 /**
@@ -28,7 +30,7 @@ struct List {
  * @brief new_node, constructor del nodo
  * @return puntero al nodo creado
  */
-Node * new_node(long);
+Node * new_node(void *);
 
 /**
  * @brief new_list, constructor de la lista
@@ -41,28 +43,28 @@ List * new_list();
  * @param list, lista a la que se va agregar el nodo
  * @param info, informacion que contendra el nodo a crear
  */
-void add(List * list, long info);
+void add(List * list, void * info);
 
 /**
  * @brief add, añade un nodo al inicio de la lista
  * @param list, lista a la que se va agregar el nodo
  * @param info, informacion que contendra el nodo a crear
  */
-void push(List * list, long info);
+void push(List * list, void * info);
 
 /**
  * @brief peek, retorna el último elemento agregado pero si desvincularlo de la lista
  * @param list, lista del nodo a ver
  * @return
  */
-long peek(List * list);
+void * peek(List * list);
 
 /**
  * @brief pop, borra el elemento en el tope
  * @param list, lista donde se borrara el nodo
  * @return
  */
-long pop(List * list);
+void * pop(List * list);
 
 /**
  * @brief print_list, convierte la lista en un string

@@ -1,7 +1,7 @@
-#include "list.h"
+#include "../Headers/list.h"
 
 
-Node * new_node(long content){
+Node * new_node(void * content){
 
     Node * n = malloc(sizeof(Node));
     n->next = n->prev = NULL;
@@ -19,7 +19,7 @@ List * new_list(){
 
 }
 
-void add(List * l, long content){
+void add(List * l, void * content){
 
     Node * n = new_node(content);
     if(l->size == 0)
@@ -32,7 +32,7 @@ void add(List * l, long content){
     l->size++;
 }
 
-void push(List * l, long content){
+void push(List * l, void * content){
 
     Node * n = new_node(content);
     if(l->size == 0)
@@ -46,7 +46,7 @@ void push(List * l, long content){
 
 }
 
-long peek(List * l){
+void * peek(List * l){
 
     if(l->size == 0)
         return 0;
@@ -57,7 +57,7 @@ long peek(List * l){
 
 }
 
-long pop_aux(List * l){
+void * pop_aux(List * l){
 
     Node * pop = l->start;
     if(l->size == 1)
@@ -72,7 +72,7 @@ long pop_aux(List * l){
 
 }
 
-long pop(List * l){
+void * pop(List * l){
 
     if(l->size == 0)
         return 0;

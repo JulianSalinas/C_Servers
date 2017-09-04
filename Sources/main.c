@@ -1,5 +1,6 @@
+#include <stdlib.h>
 #include <stdio.h>
-#include "list.h"
+#include "../Headers/list.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,8 +20,8 @@ int main(int argc, char *argv[])
     //Pruebas de la funcion add
     //No es necesario castear a long
     printf("\nPrueba de add: ");
-    add(strlist, (long) "1");
-    add(strlist, "2");
+    add(strlist, "1");
+    add(strlist, "20");
     add(strlist, "3");
     print_list(strlist, "%s");
 
