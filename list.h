@@ -69,9 +69,10 @@ void * pop(List * list);
 /**
  * @brief print_list, convierte la lista en un string
  * @param list, lista a convertir
- * @param format, Ej, "%s" o "%d"
+ * @param func, funcion para imprimir el nodo
  */
 
-void print_list(List * list, char * format);
+int print_list(List * list, int (* func)(const char *, ...));
+
 
 #endif // LIST_H

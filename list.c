@@ -1,4 +1,4 @@
-#include "../Headers/list.h"
+#include "list.h"
 
 
 Node * new_node(void * content){
@@ -6,7 +6,7 @@ Node * new_node(void * content){
     Node * n = malloc(sizeof(Node));
     n->next = n->prev = NULL;
     n->content = content;
-    return (long) n;
+    return n;
 
 }
 
@@ -81,23 +81,21 @@ void * pop(List * l){
 
 }
 
-void print_list(List * l , char * format){
+int print_list(List * l, int (* func)(const char *, ...)){
+
 
     Node * tmp = l->start;
     printf("[ ");
     if(tmp == NULL) printf("Ø");
     while(tmp != NULL){
-        printf(format, tmp->content);
+        func(tmp->content);
         tmp = tmp->next;
         if(tmp != NULL) printf(", ");
     }
     printf(" ]");
-
+    return 0;
 
 }
-
-
-
 
 
 
