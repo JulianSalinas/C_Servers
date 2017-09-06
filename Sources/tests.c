@@ -1,18 +1,6 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include "list.h"
+#include "../Headers/tests.h"
 
-int main(int argc, char *argv[])
-{
-
-    //No borrar las pruebas porfa...
-
-    void * a = "fewdwedwe";
-    long b = 123456;
-    int c = 2332;
-    printf("%zu", sizeof(a));
-    printf("%zu", sizeof(b));
-    printf("%zu", sizeof(c));
+void test_list(){
 
     List * l1 = new_list();
 
@@ -67,6 +55,4 @@ int main(int argc, char *argv[])
         tmp = tmp->next;
     }
 
-    printf("\n");
-    return 0;
 }

@@ -1,8 +1,7 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "main.h"
 
 
 #endif // UTIL_H

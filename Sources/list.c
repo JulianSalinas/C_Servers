@@ -1,4 +1,4 @@
-#include "list.h"
+#include "../Headers/list.h"
 
 
 Node * new_node(void * content){
