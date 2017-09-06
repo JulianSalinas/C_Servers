@@ -9,13 +9,29 @@ void * mythread(int * n_thread){
 int main(int argc, char *argv[])
 {
 
-    for(int i = 0; i<argc; i++){
+    if(strcmp(argv[1], "-s") == 0){
 
-        printf("Argumento %s \n", argv[i]);
+        printf("Abriendo servidor");
+        run_server(--argc, ++argv);
+
+    }
+    else{
+
+        printf("Abriendo cliente");
+        run_client(--argc, ++argv);
 
     }
 
-    test_list();
+//    for(int i = 0; i<argc; i++){
+//
+//        printf("Argumento %s \n", argv[i]);
+//
+//    }
+
+    //test_list();
+
+
+
     getchar();
     return 0;
 
