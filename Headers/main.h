@@ -18,8 +18,10 @@
 #include "Util/tests.h"
 
 #include "client.h"
-#include "server_a.h"
-#include "server_t.h"
+#include "server.h"
 #include "server_f.h"
+#include "server_k.h"
+#include "server_p.h"
+#include "server_t.h"
 
 #endif //C_SERVERS_MAIN_H

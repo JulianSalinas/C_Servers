@@ -11,8 +11,14 @@
 
 int main(int argc, char *argv[]) {
 
+    //Comprobar argumentos
+    printf("Comprobando argumentos\n");
+    for (int i = 0; i < argc; ++i) {
+        printf("Argumento %d: %s \n", i, argv[i]);
+    }
+
     // Eliminar nombre del programa de los argumentos
-    argc--; ++argv;
+    --argc; ++argv;
 
     // Modo de ejecución (servidor o cliente)
     char * mode = argv[0];
@@ -25,12 +31,12 @@ int main(int argc, char *argv[]) {
         run_server_f(--argc, ++argv);
 
     else if (strcmp(mode, "-k") == 0)
-        run_server_f(--argc, ++argv);
-
-    else if (strcmp(mode, "-t") == 0)
-        run_server_t(--argc, ++argv);
+        run_server_k(--argc, ++argv);
 
     else if (strcmp(mode, "-p") == 0)
+        run_server_p(--argc, ++argv);
+
+    else if (strcmp(mode, "-t") == 0)
         run_server_t(--argc, ++argv);
 
     else

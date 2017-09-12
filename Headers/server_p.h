@@ -1,7 +1,7 @@
 #ifndef C_SERVERS_SERVER_P_H
 #define C_SERVERS_SERVER_P_H
 
-#include "server_a.h"
+#include "server.h"
 
 /**
  * Inicializa el servidor y luego atiende a los clientes

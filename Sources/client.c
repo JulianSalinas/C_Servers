@@ -2,48 +2,46 @@
 
 int run_client(int argc, char **argv){
 
-    if(argc<2)
-    {
-        printf("<host> <puerto>\n");
-        return 1;
+    // Revisar que exista el host y el puerto
+    if(argc != 2) {
+        perror("Modo de uso: ./C_Servers -c <host> <puerto>");
     }
-    struct sockaddr_in cliente; //Declaración de la estructura con información para la conexión
-    struct hostent *servidor; //Declaración de la estructura con información del host
-    servidor = gethostbyname(argv[1]); //Asignacion
-    if(servidor == NULL)
-    { //Comprobación
-        printf("Host erróneo\n");
-        return 1;
-    }
-    int puerto, conexion;
-    char buffer[100];
-    conexion = socket(AF_INET, SOCK_STREAM, 0); //Asignación del socket
-    puerto=(atoi(argv[2])); //conversion del argumento
-    bzero((char *)&cliente, sizeof((char *)&cliente)); //Rellena toda la estructura de 0's
-    //La función bzero() es como memset() pero inicializando a 0 todas la variables
-    cliente.sin_family = AF_INET; //asignacion del protocolo
-    cliente.sin_port = htons(puerto); //asignacion del puerto
-    bcopy((char *)servidor->h_addr, (char *)&cliente.sin_addr.s_addr, sizeof(servidor->h_length));
-    //bcopy(); copia los datos del primer elemendo en el segundo con el tamaño máximo
-    //del tercer argumento.
 
+    // Identificando el host y el puerto
+    hostent * host = gethostbyname(argv[0]);
+    int port = atoi(argv[1]);
 
-    //cliente.sin_addr = *((struct in_addr *)servidor->h_addr); //<--para empezar prefiero que se usen
-    //inet_aton(argv[1],&cliente.sin_addr); //<--alguna de estas dos funciones
-    if(connect(conexion,(struct sockaddr *)&cliente, sizeof(cliente)) < 0)
-    { //conectando con el host
-        printf("Error conectando con el host\n");
-        close(conexion);
-        return 1;
+    // Comprobación del host
+    if(host < 0) {
+        perror("El host ingresado es inválido \n");
+        exit(EXIT_FAILURE);
     }
-    printf("Conectado con %s:%d\n",inet_ntoa(cliente.sin_addr),htons(cliente.sin_port));
-    //inet_ntoa(); está definida en <arpa/inet.h>
-    printf("Escribe un mensaje: ");
-    fgets(buffer, 100, stdin);
-    send(conexion, buffer, 100, 0); //envio
-    bzero(buffer, 100);
-    recv(conexion, buffer, 100, 0); //recepción
-    printf("%s", buffer);
-    return 0;
+
+    // Estructura con la configuración del cliente
+    sockaddr_in client_info;
+
+    // Configuración del cliente
+    memset(&client_info, 0, sizeof(client_info));
+    client_info.sin_family = AF_INET;
+    client_info.sin_port = htons((uint16_t) port);
+
+    // Creación del socket
+    int client_socket = socket(client_info.sin_family, SOCK_STREAM, 0);
+    if(client_socket < 0){
+        perror("Error en la apertura del socket \n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Conectando con el host
+    int connection = connect(client_socket, (sockaddr *)&client_info, sizeof(client_info));
+    if(connection < 0) {
+        printf("Error al intentar conectar con el host \n");
+        close(client_socket);
+        exit(EXIT_FAILURE);
+    }
+
+    // Ya se pueden realizar solicitudes al servidor
+    printf("Conectado con %s:%d\n", inet_ntoa(client_info.sin_addr), port);
+
 
 }
