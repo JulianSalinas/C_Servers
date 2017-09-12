@@ -1,38 +1,41 @@
 #include "../Headers/main.h"
 
-void * mythread(int * n_thread){
+/**
+ * Modos de ejecución
+ * -c : Cliente
+ * -f : Servidor FIFO
+ * -k : Servidor FORK
+ * -t : Servidor THREAD
+ * -p : Servidor PTHREAD
+ */
 
-    printf("\nSoy el hilo %d", n_thread);
-    return NULL;
-}
+int main(int argc, char *argv[]) {
 
-int main(int argc, char *argv[])
-{
+    // Eliminar nombre del programa de los argumentos
+    argc--; ++argv;
 
-    if(strcmp(argv[1], "-s") == 0){
+    // Modo de ejecución (servidor o cliente)
+    char * mode = argv[0];
 
-        printf("Abriendo servidor");
-        run_server(--argc, ++argv);
-
-    }
-    else{
-
-        printf("Abriendo cliente");
+    // Ejecutar según el modo
+    if(strcmp(mode, "-c") == 0)
         run_client(--argc, ++argv);
 
-    }
+    else if (strcmp(mode, "-f") == 0)
+        run_server_f(--argc, ++argv);
 
-//    for(int i = 0; i<argc; i++){
-//
-//        printf("Argumento %s \n", argv[i]);
-//
-//    }
+    else if (strcmp(mode, "-k") == 0)
+        run_server_f(--argc, ++argv);
 
-    //test_list();
+    else if (strcmp(mode, "-t") == 0)
+        run_server_t(--argc, ++argv);
 
+    else if (strcmp(mode, "-p") == 0)
+        run_server_t(--argc, ++argv);
 
+    else
+        printf("Comando %s desconocido\n", mode);
 
-    getchar();
     return 0;
 
 }
