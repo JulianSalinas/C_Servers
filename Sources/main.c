@@ -24,6 +24,8 @@ int main(int argc, char *argv[]) {
     char * mode = argv[0];
 
     // Ejecutar según el modo
+    // TODO Todos funcionan igual que el FIFO
+
     if(strcmp(mode, "-c") == 0)
         run_client(--argc, ++argv);
 
