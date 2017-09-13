@@ -16,14 +16,23 @@ int run_server_f(int argc, char **argv){
         printf("Esperando cliente #%d \n", n_client);
 
         socklen = sizeof(sockaddr_s);
-        int client = accept(server, (sockaddr *)&client, &socklen);
+        int client = accept(server, (sockaddr *)&sockaddr_s, &socklen);
         if(client < 0){
             printf("Error aceptar al cliente #%d \n", n_client);
         }
 
-        attend_request_f((void *)(long)client);
         printf("Cliente #%d conectado \n", n_client);
+        attend_request_f((void *)(long)client);
 
+    }
+
+}
+
+void send_file(int client, char buffer[BUFFER_SIZE], FILE * file){
+
+    while(fgets(buffer, BUFFER_SIZE, file)) {
+        send(client, buffer, strlen(buffer), 0);
+        memset(buffer, 0, BUFFER_SIZE);
     }
 
 }
@@ -31,6 +40,8 @@ int run_server_f(int argc, char **argv){
 void * attend_request_f(void * client_fd){
 
     char buffer[BUFFER_SIZE];
+    memset(buffer, 0, BUFFER_SIZE);
+
     int client = (int)(long) client_fd;
 
     // Se espera que lo primero que haga el cliente es usar el método GET
@@ -40,8 +51,12 @@ void * attend_request_f(void * client_fd){
         sprintf(buffer, "HTTP/1.0 Solo puedes usar el método GET\r\n\r\n");
 
     // Si el primer carácter es un '/' simplemente se ignora
-    char * filename = strtok(NULL, " ");
+    char filename_buffer[256];
+    char * filename = filename_buffer;
+    strcpy(filename, strtok(NULL, " "));
     if (filename[0] == '/') filename++;
+
+    printf("Se ha solicitado el archivo %s \n", filename);
 
     // Revisa que el archivo exista
     if (access(filename, F_OK) != 0) {
@@ -60,10 +75,7 @@ void * attend_request_f(void * client_fd){
     send(client, buffer, strlen(buffer), 0);
 
     FILE * file = fopen(filename, "r");
-    while(fgets(buffer, BUFFER_SIZE, file)) {
-        send(client, buffer, strlen(buffer), 0);
-        memset(buffer, 0, BUFFER_SIZE);
-    }
+    if(file) send_file(client, buffer, file);
 
     close(client);
 

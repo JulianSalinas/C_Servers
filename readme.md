@@ -21,9 +21,11 @@ _________________________
  ./C_Server -f 5000
  ```
  
- En caso del cliente se debe especificar el ip del servidor (puede ser localhost) 
- y el puerto. Ejemplo:
+ En caso del cliente se debe especificar el ip o nombre del servidor 
+ (puede ser localhost), el puerto y los archivos que se desean obtener
+ separados por comas. 
+ Ejemplo:
  
   ```
-  ./C_Server -c localhost 5000
+  ./C_Server -c localhost 5000 "../TFiles/test5.txt", "../TFiles/test1.txt"
   ```
