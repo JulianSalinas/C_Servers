@@ -11,6 +11,6 @@ int run_server_f(int, char **);
 /**
  * Función para el thread que atiende las solicitudes del cliente
  */
-void * attend_request_f(void *);
+void * attend_f(void *);
 
 #endif //C_SERVERS_SERVER_F_H

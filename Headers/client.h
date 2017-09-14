@@ -1,7 +1,7 @@
 #ifndef C_SERVERS_CLIENT_H
 #define C_SERVERS_CLIENT_H
 
-#define BUFFER_SIZE 1000
+#define BUFFER_SIZE 1024
 
 #include "main.h"
 

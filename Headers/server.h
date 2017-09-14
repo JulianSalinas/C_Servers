@@ -1,7 +1,7 @@
 #ifndef C_SERVERS_SERVER_H_H
 #define C_SERVERS_SERVER_H_H
 
-#define BUFFER_SIZE 1000
+#define BUFFER_SIZE 1024
 
 /**
  * Este archivo sirve para los 4 tipos de servidores

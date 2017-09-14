@@ -89,7 +89,9 @@ void connect_client(addrinfo * host_info, int client_fd){
 }
 
 void GET(int client_fd, char * path) {
+
     char req[1000] = {0};
     sprintf(req, "GET %s HTTP/1.0\r\n\r\n", path);
     send(client_fd, req, strlen(req), 0);
+
 }

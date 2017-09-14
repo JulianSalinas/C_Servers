@@ -11,12 +11,6 @@
 
 int main(int argc, char *argv[]) {
 
-    //Comprobar argumentos
-    printf("Comprobando argumentos\n");
-    for (int i = 0; i < argc; ++i) {
-        printf("Argumento %d: %s \n", i, argv[i]);
-    }
-
     // Eliminar nombre del programa de los argumentos
     --argc; ++argv;
 
@@ -44,6 +38,6 @@ int main(int argc, char *argv[]) {
     else
         printf("Comando %s desconocido\n", mode);
 
-    return 0;
+
 
 }

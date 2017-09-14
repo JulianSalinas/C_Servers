@@ -1,7 +1,5 @@
 #include "../Headers/server_f.h"
 
-#define BUFFER_SIZE 1000
-
 int run_server_t(int argc, char **argv){
 
     printf("Configurando servidor \n");
