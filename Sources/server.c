@@ -94,6 +94,9 @@ void * attend(void * arg){
         write(client_fd, content_lenght, strlen(content_lenght));
     }
 
+    char * header_end = "\r\n";
+    write(client_fd, header_end, strlen(header_end));
+
     send_file(client_fd, file);
     close(client_fd);
 
@@ -203,28 +206,22 @@ char * get_request_info(int client_fd){
 
 int send_file(int client_fd, FILE * file){
 
-    int ret = 0;
 
-    if(file){
+    char buffer[BUFFER_SIZE];
+    int len;
+    int ret;
 
-        char buffer[BUFFER_SIZE];
-        int len;
-
-        for (ret = 0;;) {
-            len = fread (buffer, 1, sizeof (buffer), file);
-            if (len == 0) {
-                ret = feof (file);
-                break;
-            }
-            if (!send (client_fd, buffer, len, 0)) break;
+    for (ret = 0;;) {
+        len = fread (buffer, 1, sizeof (buffer), file);
+        if (len == 0) {
+            ret = feof (file);
+            break;
         }
+        if (!send (client_fd, buffer, len, 0)) break;
+    }
 
-        fclose(file);
-    }
-    else{
-        char * error = "Error inesperado";
-        write(client_fd, error, strlen(error));
-    }
+    fclose(file);
+
 
     return ret;
 
