@@ -26,12 +26,17 @@ request_info * get_request_info(int client_fd){
     read(client_fd, buffer, BUFFER_SIZE);
     printf("Solicitud del browser: \n\n%s", buffer);
 
-    request->method = strtok(buffer, " ");
-    request->filename = strtok(0, " ");
+    if(strlen(buffer) == 0){
+        request->filename = "../Templates/400.html";
+    }
+    else{
+        request->method = strtok(buffer, " ");
+        request->filename = strtok(0, " ");
 
-    // Elimina el '/' del archivo
-    if (request->filename[0] == '/')
-        request->filename++;
+        // Elimina el '/' del archivo
+        if (request->filename[0] == '/')
+            request->filename++;
+    }
 
     return request;
 }
@@ -97,10 +102,34 @@ void * attend_f(void * arg){
         response_file = fopen(response, "r");
 
     }
-    
+
     /**
      * Resto del encabezado
      */
+    fseek(response_file, 0, SEEK_END);
+    long file_size = ftell(response_file);
+    rewind(response_file);
+
+    char content_length[50] = {0};
+    sprintf(content_length, "Content-Length: %ld\r\n", file_size);
+    write(client_fd, content_length, strlen(content_length));
+
+    char extension[10] = {0};
+    if(strstr(filename, ".txt"))
+        strcpy(extension, "text/plain");
+    else if (strstr(filename, ".html"))
+        strcpy(extension, "text/html");
+    else if (strstr(filename, ".png"))
+        strcpy(extension, "image/png");
+    else if (strstr(filename, ".jpg"))
+        strcpy(extension, "image/jpg");
+
+    char content_type[50] = {0};
+    sprintf(content_type, "Content-Type: %s\r\n", extension);
+    write(client_fd, content_type, strlen(content_type));
+
+    char * line = "\r\n";
+    write(client_fd, line, strlen(line));
 
     /**
      * Fin del resto del encabezado
