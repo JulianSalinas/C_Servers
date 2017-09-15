@@ -86,7 +86,7 @@ void set_listening_mode(int server_fd){
 
     printf("Colocando en modo escucha \n");
 
-    int max_requests = 15;
+    int max_requests = BUFFER_SIZE;
     if(listen(server_fd, max_requests) < 0){
         perror("Error: set_listening_mode(1) \n");
         close(server_fd);

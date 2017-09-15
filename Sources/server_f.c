@@ -14,41 +14,34 @@ struct client_info{
 typedef struct request_info request_info;
 struct request_info{
     char * method;
-    List * filenames;
+    char * filename;
 };
 
 request_info * get_request_info(int client_fd){
 
-    char buffer[BUFFER_SIZE];
-    memset(buffer, 0, BUFFER_SIZE);
+    char buffer[BUFFER_SIZE] = {0};
     request_info * request = malloc(sizeof(request_info));
 
     // Se obtiene el método HTTP (posiblemente GET)
-    recv(client_fd, buffer, BUFFER_SIZE, 0);
+    read(client_fd, buffer, BUFFER_SIZE);
     printf("Solicitud del browser: \n\n%s", buffer);
-    request->method = malloc(sizeof(char) * 15);
-    strcpy(request->method, strtok(buffer, " "));
 
-    // Se obtiene el string con las rutas de los archivos solicitados
-    request->filenames = new_list();
-    char * files_field = strtok(0, " ");
+    request->method = strtok(buffer, " ");
+    request->filename = strtok(0, " ");
 
-    // Se enlistan los archivos
-    char * filename = strtok(files_field, ",");
-    while(filename){
-        if (filename[0] == '/') filename++;
-        add(request->filenames, filename);
-        filename = strtok(0, ",");
-    }
+    // Elimina el '/' del archivo
+    if (request->filename[0] == '/')
+        request->filename++;
 
     return request;
 }
 
 void send_file(int client_fd, FILE * file){
 
-    char buffer[BUFFER_SIZE];
+    // Llena el buffer y lo envia (chunks)
+    char buffer[BUFFER_SIZE] = {0};
     while(fgets(buffer, BUFFER_SIZE, file)) {
-        send(client_fd, buffer, strlen(buffer), 0);
+        write(client_fd, buffer, strlen(buffer));
         memset(buffer, 0, BUFFER_SIZE);
     }
 
@@ -57,56 +50,66 @@ void send_file(int client_fd, FILE * file){
 void send_status(int client_fd, int status){
 
     // Se envia el statatus
-    char response[50];
+    char response[50] = {0};
     if(status == HTTP_OK)
-        sprintf(response, "HTTP/1.0 200 OK\r\n\r\n");
+        sprintf(response, "HTTP/1.0 200 OK\r\n");
     else if(status == HTTP_BAD_REQUEST)
-        sprintf(response, "HTTP/1.0 400 Bad Request\r\n\r\n");
+        sprintf(response, "HTTP/1.0 400 Bad Request\r\n");
     else if(status == HTTP_FORBIDDEN)
-        sprintf(response, "HTTP/1.0 403 Forbidden\r\n\r\n");
+        sprintf(response, "HTTP/1.0 403 Forbidden\r\n");
     else if(status == HTTP_NOT_FOUND)
-        sprintf(response, "HTTP/1.0 404 Not Found\r\n\r\n");
-    send(client_fd, response, strlen(response), 0);
-
-    // Se envia la plantilla html del error solo si existe
-    memset(response, 0, strlen(response));
-    sprintf(response, "../Templates/%d.html", status);
-    FILE * response_file = fopen(response, "r");
-    if(response_file) {
-        send_file(client_fd, response_file);
-        fclose(response_file);
-    }
+        sprintf(response, "HTTP/1.0 404 Not Found\r\n");
+    write(client_fd, response, strlen(response));
 
 }
 
 void * attend_f(void * arg){
 
+    int status = HTTP_OK;
+
     // Extrayendo información del cliente
     client_info * cl =  (client_info *) arg;
     int client_id = cl->client_id;
     int client_fd = cl->client_fd;
-    free(cl);
-    printf("Atendiendo al cliente #%d \n", client_id);
 
+    // Extrayendo información de la solicitud
     request_info * request = get_request_info(client_fd);
-    char * first_file = (char *)request->filenames->start->content;
-    printf("Se ha solicitado el archivo %s \n", first_file);
-
-    char * filename = first_file;
+    char * filename = request->filename;
+    printf("El cliente #%d ha solicitado el archivo %s \n", client_id, filename);
 
     // Revisa que el archivo exista
-    if (access(filename, F_OK)) send_status(client_fd, HTTP_NOT_FOUND);
+    if (access(filename, F_OK)) status = HTTP_NOT_FOUND;
 
     // Revisa que el archivo tenga permisos de lectura
-    if (access(filename, R_OK)) send_status(client_fd, HTTP_FORBIDDEN);
+    else if (access(filename, R_OK)) status = HTTP_FORBIDDEN;
+
+    send_status(client_fd, status);
+    FILE * response_file;
+
+    // Si el archivo cumplió las condicionaes, se abre dicho archivo
+    if(status == HTTP_OK) response_file = fopen(filename, "r");
 
     else {
-        send_status(client_fd, HTTP_OK);
-        FILE * file = fopen(filename, "r");
-        if(file) {
-            send_file(client_fd, file);
-            fclose(file);
-        }
+
+        // Sino, envia un template HTML con el error
+        char response[50] = {0};
+        sprintf(response, "../Templates/%d.html", status);
+        response_file = fopen(response, "r");
+
+    }
+    
+    /**
+     * Resto del encabezado
+     */
+
+    /**
+     * Fin del resto del encabezado
+     */
+
+    // Se envia ya sea el html con el error o el archivo solicitado
+    if(response_file) {
+        send_file(client_fd, response_file);
+        fclose(response_file);
     }
 
     close(client_fd);
