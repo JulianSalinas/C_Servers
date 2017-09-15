@@ -15,8 +15,9 @@
 #include <netdb.h>
 
 #include "Util/list.h"
-#include "Util/tests.h"
+#include "Util/util.h"
 
+#include "http.h"
 #include "client.h"
 #include "server.h"
 #include "server_f.h"

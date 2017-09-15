@@ -8,9 +8,4 @@
  */
 int run_server_k(int, char **);
 
-/**
- * Función para el thread que atiende las solicitudes del cliente
- */
-void * attend_request_k(void *);
-
 #endif //C_SERVERS_SERVER_K_H

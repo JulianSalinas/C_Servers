@@ -1,7 +1,8 @@
 #ifndef C_SERVERS_CLIENT_H
 #define C_SERVERS_CLIENT_H
 
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 8192
+#define MAX_FILENAME 256
 
 #include "main.h"
 

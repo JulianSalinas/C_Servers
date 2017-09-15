@@ -27,5 +27,13 @@ _________________________
  Ejemplo:
  
   ```
-  ./C_Server -c localhost 5000 "../TFiles/test5.txt", "../TFiles/test1.txt"
+  ./C_Server -c localhost 5000 "test1.txt","test2.html"
   ```
+  
+  Desde el browser se puede obtener solamente un archivo a la vez. Para
+  hacerlo se tiene el siguiente ejemplo: 
+  
+  ```
+  http://localhost:5000/test3.png
+  ```
+  
