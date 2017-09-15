@@ -80,10 +80,6 @@ void * attend(void * arg){
         char response[50] = {0};
         sprintf(response, "../Errors/%d.html", status);
         file = fopen(response, "r");
-        content_lenght = get_content_length(file);
-        content_type = get_content_type(filename);
-        write(client_fd, content_type, strlen(content_type));
-        write(client_fd, content_lenght, strlen(content_lenght));
     }
 
         // Sino, se envia el archivo solicitado
@@ -193,6 +189,8 @@ char * get_request_info(int client_fd){
     char * filename = 0;
     char buffer[BUFFER_SIZE] = {0};
     read(client_fd, buffer, BUFFER_SIZE);
+
+    printf("Solicitud: \n\n%s", buffer);
 
     if(strlen(buffer)) {
         strtok(buffer, " ");
