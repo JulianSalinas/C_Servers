@@ -57,3 +57,11 @@ char * get_content_type(char * filename){
     return content_type;
 
 }
+
+char * GET(char * filename) {
+
+    char * request = malloc(FILENAME_MAX);
+    sprintf(request, "GET %s HTTP/1.1\r\n\r\n", filename);
+    return request;
+
+}

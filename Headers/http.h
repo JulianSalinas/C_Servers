@@ -40,4 +40,11 @@ char * get_content_length(FILE * file);
  */
 char * get_content_type(char * filename);
 
+/**
+ * Pseudo-método GET del protocolo HTTP. Sirve para realizar solicitar
+ * un archivo al servidor ya que este solo responde con este protocolo.
+ * @param filename: Nombre del archivo a solicitar
+ */
+char * GET(char * filename);
+
 #endif //C_SERVERS_HTTP_H

@@ -43,13 +43,4 @@ int get_client_fd(addrinfo * host_info);
  */
 void connect_client(addrinfo * host_info, int client_fd);
 
-/**
- * Pseudo-método GET del protocolo HTTP. Sirve para realizar solicitar
- * un archivo al servidor ya que este solo responde con este protocolo.
- * @param client_fd: archivo descriptor del cliente (socket)
- * @param path: Ruta del archivo que se desea solicitar
- */
-void GET(int client_fd, char * path);
-
-
 #endif //C_SERVERS_CLIENT_H
