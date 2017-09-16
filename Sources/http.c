@@ -47,6 +47,8 @@ char * get_content_type(char * filename){
         extension = "image/png";
     else if (strstr(filename, ".jpg"))
         extension = "image/jpg";
+    else if (strstr(filename, ".ico"))
+        extension = "image/x-icon";
     else return 0;
 
     char * content_type = malloc(FILENAME_MAX);

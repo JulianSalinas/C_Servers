@@ -82,8 +82,14 @@ void * attend(void * arg){
         file = fopen(response, "r");
     }
 
-        // Sino, se envia el archivo solicitado
     else{
+
+        // Sino, se envia el archivo solicitado
+        if (strcmp(request, "favicon.ico") == 0){
+            filename = "favicon.html";
+            content_type = get_content_type(filename);
+        }
+
         file = fopen(filename, "r");
         content_lenght = get_content_length(file);
         write(client_fd, content_type, strlen(content_type));
