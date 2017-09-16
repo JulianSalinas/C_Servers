@@ -15,12 +15,18 @@ _________________________
  * -t : Servidor THREAD
  * -p : Servidor PTHREAD
  
- Para ejecutar un sevidor se debe indicar el puerto, por ejemplo: 
+ Para ejecutar un servidor se debe indicar el puerto, por ejemplo: 
  
  ```
  ./C_Server -f 5000
  ```
  
+ El servidor de Pre-Thread es especial pues requiere el número de Threads máximo como parámetro: 
+  
+  ```
+  ./C_Server -p 5000 4
+  ```
+  
  En caso del cliente se debe especificar el ip o nombre del servidor 
  (puede ser localhost), el puerto y los archivos que se desean obtener
  separados por comas. 

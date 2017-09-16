@@ -50,7 +50,8 @@ void * attend(void * arg){
     else{
 
         printf("El cliente #%d ha solicitado el archivo %s \n", client_id, request);
-
+        printf("__________________________________________________________________\n\n");
+        
         // Se mapea la solicitud al archivo en la carpeta Files del proyecto
         filename = malloc(FILENAME_MAX);
         strcpy(filename, "../Files/");
