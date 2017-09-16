@@ -212,7 +212,7 @@ int send_file(int client_fd, FILE * file){
 
 
     char buffer[BUFFER_SIZE];
-    int len;
+    size_t len;
     int ret;
 
     for (ret = 0;;) {
@@ -221,11 +221,10 @@ int send_file(int client_fd, FILE * file){
             ret = feof (file);
             break;
         }
-        if (!send (client_fd, buffer, len, 0)) break;
+        if (!write (client_fd, buffer, len )) break;
     }
 
     fclose(file);
-
 
     return ret;
 

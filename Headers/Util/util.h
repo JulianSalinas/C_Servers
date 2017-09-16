@@ -7,4 +7,6 @@
 
 int is_valid_filename(char * filename);
 
+int is_valid_folder(char * foldername);
+
 #endif //C_SERVERS_TESTS_H
