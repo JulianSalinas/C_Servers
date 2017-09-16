@@ -2,6 +2,7 @@
 #define C_SERVERS_SERVER_K_H
 
 #include "server.h"
+#include "signal.h"
 
 /**
  * Inicializa el servidor y luego atiende a los clientes
