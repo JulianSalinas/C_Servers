@@ -9,6 +9,7 @@ int run_server_k(int argc, char **argv){
     for(int n_client = 0; 1 ; ++n_client){
 
         processID = fork();             // Por cada solicitud se crea un proceso que la atienda
+        // La funcion fork() retorna un entero != 0, por lo que el padre no entra al if()
         if (processID == 0){            // El nuevo proceso comienza con la var processID con valor 0
             client_info * cl = accept_client(server, n_client);
             printf("ID del proceso que atiende: %d\n\n", getpid());
