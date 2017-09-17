@@ -1,6 +1,10 @@
 # Proyecto I: Sistemas Operativos
 
-Programa que desmuestra el uso de distintos tipos de servidores en C. El cliente puede
+Se puede acceder a la página principal desde [aquí][Pagina]
+
+[Pagina]: https://drive.google.com/drive/folders/0B3BuxMUBBTzuT3JNRmh4Vm1PNjg?usp=sharing
+
+El programa que desmuestra el uso de distintos tipos de servidores en C. El cliente puede
 solicitar a cualquiera de los servidores un archivo plano y el servidor se lo enviará. 
 El cliente puede ser un Browser, Telnet o el que ha sido diseñado en este proyecto. Para
 el envío de la información se utilizan sockets y el protocolo HTTP. 
