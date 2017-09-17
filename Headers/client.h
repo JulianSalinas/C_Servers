@@ -41,6 +41,6 @@ int get_client_fd(addrinfo * host_info);
  * @param host_info: Información del servidor a conectarse
  * @param client_fd: archivo descriptor del cliente (socket)
  */
-void connect_client(addrinfo * host_info, int client_fd);
+//void connect_client(addrinfo * host_info, int client_fd);
 
 #endif //C_SERVERS_CLIENT_H
