@@ -2,7 +2,7 @@
 
 Se puede acceder a la página principal desde [aquí][Pagina]
 
-[Pagina]: https://drive.google.com/drive/folders/0B3BuxMUBBTzuT3JNRmh4Vm1PNjg?usp=sharing
+[Pagina]: https://juliansalinas.github.io/C_Servers/
 
 El programa que desmuestra el uso de distintos tipos de servidores en C. El cliente puede
 solicitar a cualquiera de los servidores un archivo plano y el servidor se lo enviará. 
