@@ -31,6 +31,8 @@ void * run_thread(void * arg){
 
     free(cl);
 
+    sleep(1);
+
     pthread_exit(0);
 
 }
