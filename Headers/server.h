@@ -85,13 +85,4 @@ client_info * accept_client(int server_fd, int n_client);
  */
 char * get_request_info(int client_fd);
 
-/**
- * Envia un archivo abierto al cliente (aqui se asume que el archivo
- * fue leido correctamente pues fue validado antes de enviarlo)
- * @param client_fd: socket del cliente
- * @param file: archivo abierto y validado previamente
- * @return Indefinido XD
- */
-int send_file(int client_fd, FILE * file);
-
 #endif //C_SERVERS_SERVER_H_H

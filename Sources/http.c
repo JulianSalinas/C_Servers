@@ -1,7 +1,7 @@
 #include "../Headers/http.h"
 
 
-char * get_header(int status){
+char * create_status_code(int status){
 
     char * response = 0;
 
@@ -22,7 +22,7 @@ char * get_header(int status){
 
 }
 
-char * get_content_length(FILE * file){
+char * create_content_lenght(FILE * file){
 
     fseek(file, 0, SEEK_END);
     long file_size = ftell(file);
@@ -35,7 +35,7 @@ char * get_content_length(FILE * file){
 
 }
 
-char * get_content_type(char * filename){
+char * create_content_type(char * filename){
 
     char * extension = 0;
 
@@ -58,10 +58,38 @@ char * get_content_type(char * filename){
 
 }
 
-char * GET(char * filename) {
+char * create_get_method(char *filename) {
 
     char * request = malloc(FILENAME_MAX);
     sprintf(request, "GET %s HTTP/1.1\r\n\r\n", filename);
     return request;
+
+}
+
+char * extract_status_code(char * buffer){
+
+    char * cpy_buffer = malloc(BUFFER_SIZE);
+    memcpy(cpy_buffer, buffer, BUFFER_SIZE);
+
+    char * status = malloc(MAX_FILENAME);
+    strcpy(status, strtok(cpy_buffer,"\r\n"));
+    return status;
+
+}
+
+size_t extract_content_lenght(char * buffer){
+
+    char * cpy_buffer = malloc(BUFFER_SIZE);
+    memcpy(cpy_buffer, buffer, BUFFER_SIZE);
+    strtok(cpy_buffer,"\r\n");
+    strtok(0,"\r\n");
+
+    char * content_lenght = malloc(MAX_FILENAME);
+    strcpy(content_lenght, strtok(0, "\r\n"));
+
+    strtok(content_lenght, ":");
+    strcpy(content_lenght, strtok(0, " :"));
+
+    return (size_t) strtoll(content_lenght, 0, 10);
 
 }

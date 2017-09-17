@@ -64,7 +64,7 @@ void * attend(void * arg){
         else{
 
             // Revisa que la extensión del archivo sea HTML, TXT, PNG o JPG
-            content_type = get_content_type(filename);
+            content_type = create_content_type(filename);
 
             if (content_type == 0)
                 status = HTTP_UNSUPPORTED_MEDIA_TYPE;
@@ -73,7 +73,7 @@ void * attend(void * arg){
     }
 
     // Se envia el encabezado con el status
-    header = get_header(status);
+    header = create_status_code(status);
     write(client_fd, header, strlen(header));
 
     // Si sucedió un error entonces el archivo es un html con la razón
@@ -88,11 +88,11 @@ void * attend(void * arg){
         // Sino, se envia el archivo solicitado
         if (strcmp(request, "favicon.ico") == 0){
             filename = "favicon.html";
-            content_type = get_content_type(filename);
+            content_type = create_content_type(filename);
         }
 
         file = fopen(filename, "r");
-        content_lenght = get_content_length(file);
+        content_lenght = create_content_lenght(file);
         write(client_fd, content_type, strlen(content_type));
         write(client_fd, content_lenght, strlen(content_lenght));
     }
@@ -100,7 +100,7 @@ void * attend(void * arg){
     char * header_end = "\r\n";
     write(client_fd, header_end, strlen(header_end));
 
-    send_file(client_fd, file);
+    copy_content(fileno(file), client_fd);
     close(client_fd);
 
 }
@@ -207,26 +207,4 @@ char * get_request_info(int client_fd){
     }
 
     return filename;
-}
-
-int send_file(int client_fd, FILE * file){
-
-
-    char buffer[BUFFER_SIZE];
-    size_t len;
-    int ret;
-
-    for (ret = 0;;) {
-        len = fread (buffer, 1, sizeof (buffer), file);
-        if (len == 0) {
-            ret = feof (file);
-            break;
-        }
-        if (!write (client_fd, buffer, len )) break;
-    }
-
-    fclose(file);
-
-    return ret;
-
 }

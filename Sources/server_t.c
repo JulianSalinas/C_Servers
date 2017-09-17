@@ -11,9 +11,8 @@ int run_server_t(int argc, char **argv){
         pthread_t thread;
         client_info * cl = accept_client(server, n_client);
 
-        if(pthread_create(&thread, 0, run_thread, cl) < 0 ){
+        if(pthread_create(&thread, 0, run_thread, cl) < 0 )
             printf("No se ha podido atender al cliente #%d\n", n_client);
-        }
 
     }
 
