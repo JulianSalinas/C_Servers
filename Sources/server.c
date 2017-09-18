@@ -84,13 +84,6 @@ void * attend(void * arg){
     }
 
     else{
-
-        // Sino, se envia el archivo solicitado
-        if (strcmp(request, "favicon.ico") == 0){
-            filename = "favicon.html";
-            content_type = create_content_type(filename);
-        }
-
         file = fopen(filename, "r");
         content_lenght = create_content_lenght(file);
         write(client_fd, content_type, strlen(content_type));
@@ -100,7 +93,13 @@ void * attend(void * arg){
     char * header_end = "\r\n";
     write(client_fd, header_end, strlen(header_end));
 
-    copy_content(fileno(file), client_fd);
+    // Colocamos el puntero al inicio
+    int file_fd = fileno(file);
+    lseek(file_fd, 0, SEEK_SET);
+
+    copy_content(file_fd, client_fd);
+
+    fclose(file);
     close(client_fd);
 
 }

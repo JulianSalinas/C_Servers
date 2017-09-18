@@ -12,6 +12,7 @@ void copy_content(int from_fd, int to_fd){
     }
 
 }
+
 int is_valid_name(char * name, char bad_chars[]){
 
     for (int i = 0; i < strlen(bad_chars); ++i)
@@ -63,7 +64,7 @@ int mkdir_folder(char * foldername){
 
     struct stat st = {0};
     if(stat(foldername, &st) < 0)
-        return mkdir(foldername, 0700);
+        return mkdir(foldername, 0700) == 0;
     return 1;
 
 }

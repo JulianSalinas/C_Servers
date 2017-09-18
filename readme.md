@@ -32,12 +32,13 @@ _________________________
   ```
   
  En caso del cliente se debe especificar el ip o nombre del servidor 
- (puede ser localhost), el puerto y los archivos que se desean obtener
+ (puede ser localhost), el puerto, la ruta de guardado y 
+ los archivos que se desean obtener
  separados por comas. 
  Ejemplo:
  
   ```
-  ./C_Server -c localhost 5000 "test1.txt","test2.html"
+  ./C_Server -c localhost 5000 /home/julian/tests "test1.txt","test2.html"
   ```
   
   Desde el browser se puede obtener solamente un archivo a la vez. Para

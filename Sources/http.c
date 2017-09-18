@@ -25,11 +25,11 @@ char * create_status_code(int status){
 char * create_content_lenght(FILE * file){
 
     fseek(file, 0, SEEK_END);
-    long file_size = ftell(file);
+    size_t file_size = (size_t) ftell(file);
     rewind(file);
 
     char * content_length = malloc(FILENAME_MAX);
-    sprintf(content_length, "Content-Length: %ld\r\n", file_size);
+    sprintf(content_length, "Content-Length: %zu\r\n", file_size);
 
     return content_length;
 
