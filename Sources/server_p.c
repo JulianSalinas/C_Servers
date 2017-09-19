@@ -9,7 +9,7 @@ int run_server_p(int argc, char **argv){
 
     clients = new_list();
 
-    int threadAmount = (int) strtod(argv[1], strlen(argv[1])-1);    // Obtiene el param de numero de hilos
+    long threadAmount = strtol(argv[1], 0, 10);                     // Obtiene el param de numero de hilos
 
     int server = setup_server(argc, argv);
 

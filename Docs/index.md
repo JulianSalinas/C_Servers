@@ -1,15 +1,12 @@
 # Proyecto I: Sistemas Operativos
 
-Se puede acceder a la página principal desde [aquí][Pagina].
-
-[Pagina]: https://juliansalinas.github.io/C_Servers/
-
 El programa que desmuestra el uso de distintos tipos de servidores en C. El cliente puede
 solicitar a cualquiera de los servidores un archivo plano y el servidor se lo enviará. 
 El cliente puede ser un Browser, Telnet o el que ha sido diseñado en este proyecto. Para
 el envío de la información se utilizan sockets y el protocolo HTTP. 
 
 ##### Compilación
+
 
 Para compilar el proyecto es necesario contar con **make** y **cmake 3.7**
 como mínimo, de lo contrario será necesario abrir una terminal con 
@@ -52,9 +49,10 @@ instalación:
   ```
   make
   ```
-  
+ 
   *Nota: El proyecto ya contiene la carpeta Bin, por tanto, 
-   para ejecutar el programa solamente es necesario accederla.*
+  para ejecutar el programa solamente es necesario accederla.*
+  
   
 ##### Ejecución
 _________________________
@@ -85,7 +83,7 @@ _________________________
  Ejemplo:
  
   ```
-  ./C_Server -c localhost 5000 /home/julian/tests test1.txt, test2.html
+  ./C_Server -c localhost 5000 /home/julian/tests test1.txt,test2.html
   ```
   
   Desde el browser se puede obtener solamente un archivo a la vez. Para

@@ -114,3 +114,11 @@ atlassian-ide-plugin.xml
 
 
 \.idea/
+
+Bin/CMakeFiles/
+
+Bin/CMakeCache\.txt
+
+Bin/C_Servers\.cbp
+
+Bin/cmake_install\.cmake
