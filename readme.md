@@ -17,28 +17,15 @@ como mínimo, de lo contrario será necesario abrir una terminal con
 *Ctrl + Alt + T* y ejecutar los siguientes comandos para realizar su 
 instalación: 
 
- >sudo apt-get install make
+ >sudo apt-get install make && sudo apt-get install cmake
  
  *Nota: Estos programas están disponibles por defecto en el Ubuntu 17.10.*
  
  Una vez obtenidas estas dependencias, es necesario abrir una terminal 
  ubicada dentro del proyecto. En esta colocamos el siguiente comando 
- para crear una carpeta que almacene el ejecutable, en este caso *Bin*: 
+ para crear el ejecutable en un carpeta llamada *Bin*: 
   
- >mkdir Bin
-  
- Ingresamos a la carpeta que se acaba de crear: 
-  
- >cd Bin
-  
- Luego ejecutamos el siguiente comando para generar el archivo *Makefile*,
- necesario para el siguiente paso: 
- 
- >cmake ..
-  
- Para finalizar, compilamos el proyecto ingresando simplemente: 
-  
- >make
+ >mkdir Bin && cd Bin && cmake .. && make
   
  *Nota: El proyecto ya contiene la carpeta Bin, por tanto, 
  para ejecutar el programa solamente es necesario accederla.*
